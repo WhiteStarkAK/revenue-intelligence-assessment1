@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Intelligence Assessment - V14</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lora', serif;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+        }
+        .font-sans { font-family: 'Inter', sans-serif; }
+        .form-step, .results-step { display: none; }
+        .form-step.active, .results-step.active { display: block; }
+        .progress-bar-inner { transition: width 0.3s ease-in-out; }
+        .option-card { transition: all 0.2s ease-in-out; }
+        .option-card.selected {
+            border-color: #fbbf24;
+            background-color: #1e3a8a;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+        }
+        .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="text-white antialiased">
+
+    <!-- Hero Section -->
+    <div id="heroSection" class="min-h-screen flex flex-col justify-center items-center text-center p-6 animate-fade-in">
+        <div class="bg-slate-900 bg-opacity-30 backdrop-blur-sm p-8 rounded-2xl max-w-3xl">
+            <div class="flex justify-center items-center mb-6">
+                 <svg class="w-16 h-16 text-amber-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008h-.008v-.008z" /></svg>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold font-sans tracking-tight mb-4">Find the Hidden Revenue Leaks Costing Your Business <span class="text-amber-400">$50K–$500K</span> Every Year.</h1>
+            <p class="text-lg md:text-xl text-slate-300 mb-8">Answer our intelligent diagnostic to receive a personalized Revenue Intelligence Report — <span class="font-bold">FREE</span> for a limited time.</p>
+            <button id="startAssessmentBtn" class="bg-amber-400 text-slate-900 font-bold font-sans py-4 px-8 rounded-lg text-xl hover:bg-amber-300 transition-colors shadow-lg">Start My Free Assessment</button>
+        </div>
+    </div>
+
+    <!-- Main Form Container -->
+    <div id="formContainer" class="hidden max-w-3xl mx-auto p-4 md:p-8">
+        <div id="assessmentHolder" class="bg-slate-900 bg-opacity-50 backdrop-blur-md p-6 md:p-10 rounded-2xl shadow-2xl">
+            <!-- Progress Bar -->
+            <div class="mb-8">
+                <div class="flex justify-between mb-2 font-sans text-sm text-slate-400">
+                    <span id="progressText"></span>
+                    <span id="progressPercent"></span>
+                </div>
+                <div class="w-full bg-slate-700 rounded-full h-2.5">
+                    <div id="progressBar" class="bg-amber-400 h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div id="assessmentForm">
+                <!-- Form steps will be injected here -->
+            </div>
+
+             <!-- Results Step -->
+            <div id="resultsStep" class="results-step text-center">
+                 <h2 class="text-2xl md:text-3xl font-bold font-sans mb-4">Your Preliminary Diagnosis is Ready.</h2>
+                 <p class="text-slate-300 mb-8">Based on your answers, we've calculated your Business Health Score.</p>
+                 <div id="scoreDisplay" class="my-8">
+                     <p class="text-6xl md:text-8xl font-bold font-sans" id="finalScoreText">--</p>
+                     <p class="text-xl md:text-2xl font-bold font-sans mt-2" id="severityText"></p>
+                 </div>
+                 <p class="text-slate-300 mb-6">Enter your professional email below to receive the full, personalized report with a detailed breakdown of your primary revenue leak.</p>
+                 <input type="email" id="email" placeholder="you@company.com" class="w-full bg-slate-800 border-2 border-slate-600 rounded-lg p-4 text-xl text-center focus:border-amber-400 focus:ring-amber-400">
+                 <button type="button" onclick="submitForm()" class="w-full bg-amber-400 text-slate-900 font-bold font-sans py-3 px-6 rounded-lg text-lg hover:bg-amber-300 transition-colors mt-6">Send My Free Report</button>
+            </div>
+        </div>
+
+        <!-- Trust Indicators -->
+        <div class="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-8 text-slate-400 font-sans text-sm">
+             <div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /></svg><span>Confidential & Secure</span></div>
+             <div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg><span>CEO-Only Access</span></div>
+             <div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 2a1 1 0 00-1 1v1H3a1 1 0 000 2h1v1a1 1 0 001 1h12a1 1 0 001-1V6h1a1 1 0 100-2h-1V3a1 1 0 00-1-1H5zM4 11a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM4 15a1 1 0 011-1h6a1 1 0 110 2H5a1 1 0 01-1-1z" clip-rule="evenodd" /></svg><span>100% Free Report</span></div>
+        </div>
+        <div class="bg-amber-400 text-slate-900 text-center p-3 mt-6 rounded-lg font-sans font-bold">Only 7 free Revenue Reports left this month.</div>
+    </div>
+    
+    <!-- Thank You / Confirmation Page -->
+    <div id="thankYouPage" class="hidden min-h-screen flex flex-col justify-center items-center text-center p-6">
+         <div class="bg-slate-900 bg-opacity-30 backdrop-blur-sm p-8 rounded-2xl max-w-3xl">
+             <div id="popupAnimation" class="mb-6"><div class="text-6xl">🚀</div></div>
+            <h1 id="thankYouMessage" class="text-4xl md:text-5xl font-bold font-sans tracking-tight mb-4">Report Sent!</h1>
+            <p class="text-lg md:text-xl text-slate-300 mb-4">Your personalized Revenue Intelligence Report is on its way to your inbox.</p>
+            <div class="text-left bg-slate-800 p-6 rounded-lg my-8">
+                 <p class="font-sans font-bold text-amber-400 mb-2">💡 Quick Insight: The 5-Minute Rule</p>
+                 <p class="text-slate-300">Our data shows that responding to a new lead within 5 minutes increases the odds of converting them by 900%. Your report will highlight how your current processes measure up.</p>
+            </div>
+            <p class="text-lg md:text-xl font-bold mb-6">Ready to build your action plan?</p>
+            <a href="https://calendly.com/adityaadas1/30min" target="_blank" class="bg-amber-400 text-slate-900 font-bold font-sans py-4 px-8 rounded-lg text-xl hover:bg-amber-300 transition-colors shadow-lg animate-pulse">Book Your Free 20-Min Revenue Command Call</a>
+        </div>
+    </div>
+    
+<script>
+    // ===================================================================================
+    // == CONFIGURATION & STATE MANAGEMENT
+    // ===================================================================================
+    const backendUrl = 'YOUR_GOOGLE_SHEET_WEB_APP_URL_HERE';
+    
+    const questions = [
+        // Step 1: Identity & Context
+        { id: 'companyName', type: 'text', title: 'What is the name of your company?', placeholder: 'e.g., Acme Corporation' },
+        { id: 'fullName', type: 'text', title: "What's your full name?", placeholder: 'e.g., John Doe' },
+        { id: 'role', type: 'text', title: 'And your current role?', placeholder: 'e.g., CEO, Founder' },
+        { id: 'phone', type: 'tel', title: 'What is your direct phone number?', placeholder: 'e.g., +1 (555) 123-4567' },
+        { id: 'businessModel', type: 'choice', title: 'What is your primary business model?', options: ['SaaS', 'E-commerce', 'Agency', 'Coaching/Consulting', 'Local Business', 'Other'] },
+        { id: 'employeeCount', type: 'choice', title: 'What is your current team size?', options: ['<50', '<100', '<200', '200–500', '500+'] },
+        // Step 2: Money Flow Check
+        { id: 'salesModel', type: 'choice', title: 'Where do most of your sales originate?', options: ['Online / Digital', 'Offline / In-Person', 'Hybrid'] },
+        { id: 'annualRevenueRange', type: 'choice-single', title: 'What is your approximate annual revenue?', options: ['<$500K', '$500K - $2M', '$2M - $10M', '$10M+'] },
+        { id: 'monthlyAdSpend', type: 'choice-single', title: 'What is your approximate monthly marketing & ad spend?', options: ['<$10K', '$10K - $50K', '$50K - $200K', '$200K+'] },
+        { id: 'currency', type: 'choice', title: 'What is your primary operating currency?', options: ['USD', 'EUR', 'GBP', 'CAD', 'AUD'] },
+        { id: 'websiteConversionRate', type: 'number', title: 'What is your website\'s approximate lead conversion rate? (%)', placeholder: 'e.g., 2.5' },
+        // Step 3: Leak Discovery
+        { id: 'leadQuality', type: 'rating', title: 'How would you rate your average lead quality?', subtitle: '1 = Poor, 10 = Perfect Fit' },
+        { id: 'leadResponseTime', type: 'rating', title: 'How would you rate your team\'s lead response speed?', subtitle: '1 = Days, 10 = Instant' },
+        { id: 'closeRate', type: 'number', title: 'What is your sales team\'s approximate close rate? (%)', placeholder: 'e.g., 20' },
+        { id: 'customerChurn', type: 'number', title: 'What is your approximate monthly customer churn rate? (%)', placeholder: 'e.g., 5' },
+        { id: 'ltv', type: 'rating', title: 'How accurately do you track Customer Lifetime Value (LTV)?', subtitle: '1 = No Idea, 10 = With Precision' },
+        { id: 'useCRM', type: 'rating', title: 'How effectively is a CRM integrated into your process?', subtitle: '1 = Not at all, 10 = It\'s our command center' },
+        { id: 'salesMarketingAlignment', type: 'rating', title: 'How aligned are your Sales & Marketing teams?', subtitle: '1 = Disconnected, 10 = Perfectly Synced' },
+        { id: 'marketingSetup', type: 'choice', title: 'How is your marketing currently managed?', options: ['In-house', 'Agency', 'Both', 'None'] },
+        // Step 4: Personalization
+        { id: 'gender', type: 'choice', title: 'This helps us personalize your confirmation message.', options: ['Male', 'Female', 'Other'] }
+    ];
+
+    let currentStep = 0;
+    const formData = {};
+
+    // ===================================================================================
+    // == DOM ELEMENTS
+    // ===================================================================================
+    const startAssessmentBtn = document.getElementById('startAssessmentBtn');
+    const heroSection = document.getElementById('heroSection');
+    const formContainer = document.getElementById('formContainer');
+    const assessmentForm = document.getElementById('assessmentForm');
+    const resultsStep = document.getElementById('resultsStep');
+    const finalScoreText = document.getElementById('finalScoreText');
+    const severityText = document.getElementById('severityText');
+    const thankYouPage = document.getElementById('thankYouPage');
+    const thankYouMessage = document.getElementById('thankYouMessage');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const progressPercent = document.getElementById('progressPercent');
+
+    // ===================================================================================
+    // == CORE FUNCTIONS
+    // ===================================================================================
+    function initializeForm() {
+        // Capture UTM parameters from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        formData.sourceUTM = urlParams.get('utm_source') || 'Direct';
+
+        startAssessmentBtn.addEventListener('click', () => {
+            heroSection.classList.add('hidden');
+            formContainer.classList.remove('hidden');
+            renderStep(currentStep);
+        });
+    }
+
+    function renderStep(stepIndex) {
+        const question = questions[stepIndex];
+        let stepHtml = `<div class="form-step active animate-fade-in">
+            <h2 class="text-2xl md:text-3xl font-bold font-sans mb-2 text-center">${question.title}</h2>
+            ${question.subtitle ? `<p class="text-slate-400 text-center mb-6">${question.subtitle}</p>` : '<div class="mb-6"></div>'}`;
+
+        if (question.type === 'choice' || question.type === 'choice-single') {
+            const gridCols = question.options.length > 3 ? 'md:grid-cols-2' : 'md:grid-cols-2';
+            stepHtml += `<div class="grid grid-cols-1 ${gridCols} gap-4">`;
+            question.options.forEach(option => {
+                const onclickAction = `selectOption(this, '${question.id}', '${option}')`;
+                 stepHtml += `<button type="button" onclick="${onclickAction}" class="option-card border-2 border-slate-600 rounded-lg p-4 text-center hover:border-amber-400 focus:border-amber-400 font-sans">${option}</button>`;
+            });
+            stepHtml += `</div>`;
+        } else if (question.type === 'rating') {
+             stepHtml += `<div class="flex flex-wrap justify-center gap-2">`;
+             for(let i = 1; i <= 10; i++) {
+                stepHtml += `<button type="button" onclick="selectOption(this, '${question.id}', '${i}')" class="option-card h-12 w-12 flex items-center justify-center border-2 border-slate-600 rounded-lg hover:border-amber-400 focus:border-amber-400 font-sans font-bold text-lg">${i}</button>`;
+             }
+             stepHtml += `</div>`;
+        } else { // text, email, number, tel
+            stepHtml += `<input type="${question.type}" id="${question.id}" placeholder="${question.placeholder}" class="w-full bg-slate-800 border-2 border-slate-600 rounded-lg p-4 text-xl text-center focus:border-amber-400 focus:ring-amber-400">
+            <button type="button" onclick="nextStep()" class="w-full bg-amber-400 text-slate-900 font-bold font-sans py-3 px-6 rounded-lg text-lg hover:bg-amber-300 transition-colors mt-6">Next</button>`;
+        }
+        
+        stepHtml += `</div>`;
+        assessmentForm.innerHTML = stepHtml;
+        
+        const inputField = document.getElementById(question.id);
+        if(inputField) {
+            inputField.focus();
+            inputField.addEventListener('keypress', (event) => {
+                if (event.key === "Enter") { event.preventDefault(); nextStep(); }
+            });
+        }
+        updateProgress();
+    }
+    
+    window.selectOption = function(element, key, value) {
+        // For multi-select, this would need to toggle. For now, it's single select.
+        document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+        element.classList.add('selected');
+        formData[key] = value;
+        setTimeout(nextStep, 200);
+    }
+    
+    window.nextStep = function() {
+        if (currentStep < questions.length) {
+            const question = questions[currentStep];
+            if (['text', 'email', 'number', 'tel'].includes(question.type)) {
+                const inputField = document.getElementById(question.id);
+                if (!inputField.value) {
+                    alert('Please fill out this field to continue.');
+                    return;
+                }
+                formData[question.id] = inputField.value;
+            }
+        }
+        
+        currentStep++;
+
+        if (currentStep < questions.length) {
+            renderStep(currentStep);
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        assessmentForm.innerHTML = '';
+        assessmentForm.style.display = 'none';
+        resultsStep.classList.add('active');
+        
+        const { score, severity } = clientSideComputeScore(formData);
+        finalScoreText.textContent = score;
+        severityText.textContent = `Risk Level: ${severity}`;
+        
+        if (severity === 'High Risk') severityText.style.color = '#ef4444'; // red-500
+        else if (severity === 'Medium Risk') severityText.style.color = '#f59e0b'; // amber-500
+        else severityText.style.color = '#22c55e'; // green-500
+    }
+    
+    async function submitForm() {
+        const emailField = document.getElementById('email');
+        if (!emailField.value || !emailField.value.includes('@')) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+        formData.email = emailField.value;
+        
+        // Add a fake 'biggestChallenge' for the backend scoring, since we removed it from this version
+        // This ensures the backend doesn't crash.
+        formData.biggestChallenge = formData.biggestChallenge || 'Not specified';
+        
+        resultsStep.innerHTML = `<div class="text-center py-12"><div class="text-2xl font-bold font-sans">Submitting & Generating Report...</div><p class="mt-2 text-slate-400">This will just take a moment.</p></div>`;
+
+        try {
+            const response = await fetch(backendUrl, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            const result = await response.json();
+
+            if (result.result === "success") {
+                showThankYouPage(result.gender);
+            } else {
+                throw new Error(result.error || 'Unknown server error.');
+            }
+        } catch (error) {
+            console.error('Submission failed:', error);
+            resultsStep.innerHTML = `<div class="text-center py-12"><h2 class="text-2xl font-bold text-red-500">A critical error occurred.</h2><p class="mt-2 text-slate-400">Your data could not be submitted. Please refresh and try again.</p><p class="mt-1 text-xs text-slate-500">Error: ${error.message}</p></div>`;
+        }
+    }
+
+    function showThankYouPage(gender) {
+        formContainer.classList.add('hidden');
+        thankYouPage.classList.remove('hidden');
+        let salutation = 'Upcoming Billionaire';
+        if (gender === 'Male') salutation = 'Mr.';
+        if (gender === 'Female') salutation = 'Mrs.';
+        // This assumes fullname is captured. We need to reconstruct it or pass it back.
+        // For simplicity, we'll use a generic message.
+        document.getElementById('thankYouMessage').textContent = `Thank you for your time, ${salutation}! Report Sent!`;
+    }
+
+    function updateProgress() {
+        const progress = (currentStep / questions.length) * 100;
+        progressBar.style.width = `${progress}%`;
+        progressText.textContent = `Step ${currentStep + 1} of ${questions.length}`;
+        progressPercent.textContent = `${Math.round(progress)}%`;
+    }
+    
+    function clientSideComputeScore(data) {
+        let score = 100;
+        const convRate = parseFloat(data.websiteConversionRate) || 0;
+        const leadQual = parseInt(data.leadQuality, 10) || 5;
+        const respTime = parseInt(data.leadResponseTime, 10) || 5;
+        const closeRateNum = parseFloat(data.closeRate) || 0;
+        const churn = parseFloat(data.customerChurn) || 0;
+        const ltvScore = parseInt(data.ltv, 10) || 5;
+        const crmScore = parseInt(data.useCRM, 10) || 5;
+        const smAlign = parseInt(data.salesMarketingAlignment, 10) || 5;
+
+        if (convRate < 1) score -= 15; else if (convRate < 2) score -= 8;
+        if (leadQual < 5) score -= 12;
+        if (respTime < 5) score -= 15; else if (respTime < 8) score -= 6;
+        if (closeRateNum < 15) score -= 15; else if (closeRateNum < 25) score -= 8;
+        if (churn > 10) score -= 20; else if (churn > 5) score -= 10;
+        if (ltvScore < 5) score -= 5;
+        if (crmScore < 5) score -= 8;
+        if (smAlign < 5) score -= 10;
+
+        score = Math.max(0, Math.round(score));
+
+        let severity;
+        if (score < 50) severity = "High Risk";
+        else if (score < 75) severity = "Medium Risk";
+        else severity = "Low Risk";
+        
+        return { score, severity };
+    }
+
+    initializeForm();
+</script>
+
+</body>
+</html>
+
+<!-- Force Rebuild v2 -->
+
+
+
+
+
+
